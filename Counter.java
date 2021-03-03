@@ -9,8 +9,8 @@ public class Counter{
         return count;
     }
 
-    public void count(){
-        count++;
+    public void count(int i){
+        count+=i;
     }
 
     public void reset(){

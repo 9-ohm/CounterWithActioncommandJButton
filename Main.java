@@ -11,13 +11,15 @@ import javax.swing.JTextField;
 public class Main{
     public static void main(String[] args) {
         MyFrame frame = new MyFrame("GUI");
-        frame.setSize(400, 400);
+        frame.setSize(250, 250);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true); 
+
+        System.out.println();
     }
 }
 class MyFrame extends JFrame{
-    private static final String[] FACES = new String[]{"1", "2", "3",};
+    private static final String[] FACES = new String[]{"+1", "+2", "+3",};
     private JLabel label;
     private Counter counter;
     private JTextField textField;
@@ -41,23 +43,40 @@ class MyFrame extends JFrame{
 
         JPanel facesPanel = new JPanel();
         GridLayout layout = new GridLayout(0, 3);
-        layout.setHgap(3);
-        layout.setVgap(1);
+        layout.setHgap(5);
+        layout.setVgap(5);
         
         facesPanel.setLayout(layout);
-
-        for(String face : FACES){
-            facesPanel.add(new JButton(face));
+        for(int i = 0; i<FACES.length; i++){
+            JButton a = new JButton(FACES[i]);
+            a.addActionListener(new Plus());
+            if(i==0)
+            a.setActionCommand("1");
+            if(i==1)
+            a.setActionCommand("2");
+            if(i==2)
+            a.setActionCommand("3");
+            facesPanel.add(a);
         }
         this.add(facesPanel, BorderLayout.PAGE_END);
-
         
     }
-    class MyactionListener implements ActionListener{
+    class Plus implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            counter.count();
-            label.setText("" + counter.getValue());
-       }
+            String action = e.getActionCommand();
+            if(action.equals("1")) {
+                counter.count(1);
+                label.setText("" + counter.getValue());
+            }
+            if(action.equals("2")) {
+                counter.count(2);
+                label.setText("" + counter.getValue());
+            }
+            if(action.equals("3")) {
+                counter.count(3);
+                label.setText("" + counter.getValue());
+            }
+        }
     }
     class MyactionListenerReset implements ActionListener{
         public void actionPerformed(ActionEvent e){
