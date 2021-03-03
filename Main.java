@@ -14,15 +14,16 @@ public class Main{
         frame.setSize(250, 250);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true); 
-
-        System.out.println();
     }
 }
+
 class MyFrame extends JFrame{
     private static final String[] FACES = new String[]{"+1", "+2", "+3",};
     private JLabel label;
     private Counter counter;
-    private JTextField textField;
+    private JButton resetButton, a;
+    private JPanel facesPanel;
+    private GridLayout layout;
 
     public MyFrame(String title){
         super(title);
@@ -37,30 +38,33 @@ class MyFrame extends JFrame{
         label.setVerticalAlignment(JLabel.CENTER);
         this.add(label, BorderLayout.CENTER);
 
-        JButton resetButton = new JButton("Reset");
+        resetButton = new JButton("Reset");
         resetButton.addActionListener(new MyactionListenerReset());
         this.add(resetButton, BorderLayout.PAGE_START);
 
-        JPanel facesPanel = new JPanel();
-        GridLayout layout = new GridLayout(0, 3);
+        facesPanel = new JPanel();
+        layout = new GridLayout(0, 3);
         layout.setHgap(5);
         layout.setVgap(5);
-        
         facesPanel.setLayout(layout);
+
         for(int i = 0; i<FACES.length; i++){
-            JButton a = new JButton(FACES[i]);
+            a = new JButton(FACES[i]);
             a.addActionListener(new Plus());
-            if(i==0)
-            a.setActionCommand("1");
-            if(i==1)
-            a.setActionCommand("2");
-            if(i==2)
-            a.setActionCommand("3");
+            if(i==0){
+                a.setActionCommand("1");
+            }
+            else if(i==1){
+                a.setActionCommand("2");
+            }
+            else if(i==2){
+                a.setActionCommand("3");
+            }
             facesPanel.add(a);
         }
-        this.add(facesPanel, BorderLayout.PAGE_END);
-        
+        this.add(facesPanel, BorderLayout.PAGE_END);  
     }
+
     class Plus implements ActionListener{
         public void actionPerformed(ActionEvent e){
             String action = e.getActionCommand();
@@ -68,22 +72,22 @@ class MyFrame extends JFrame{
                 counter.count(1);
                 label.setText("" + counter.getValue());
             }
-            if(action.equals("2")) {
+            else if(action.equals("2")) {
                 counter.count(2);
                 label.setText("" + counter.getValue());
             }
-            if(action.equals("3")) {
+            else if(action.equals("3")) {
                 counter.count(3);
                 label.setText("" + counter.getValue());
             }
         }
     }
+
     class MyactionListenerReset implements ActionListener{
         public void actionPerformed(ActionEvent e){
             counter.reset();
             label.setText("" + counter.getValue());
         }
     }
-
 }
     
